@@ -112,7 +112,18 @@ st.markdown("""
         font-weight: 600 !important;
         color: #ffffff !important;
         line-height: 1.3 !important;
+        margin-top: 2rem !important;
         margin-bottom: 1rem;
+        padding-top: 1rem !important;
+    }
+
+    /* Sub-header - Subtitle text */
+    .sub-header {
+        font-size: 18px !important;
+        font-weight: 400 !important;
+        color: #cfe7db !important;
+        line-height: 1.5 !important;
+        margin-bottom: 2rem !important;
     }
 
     /* 2) Section Titles - 22px, weight 500, line-height 1.4 */
@@ -468,6 +479,7 @@ st.markdown("""
     /* Main content column */
     [data-testid="stMainBlockContainer"] {
         background-color: #0c2114 !important;
+        padding-top: 3rem !important;
     }
 
     /* View container */
