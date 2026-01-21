@@ -83,6 +83,17 @@ st.markdown("""
         line-height: 1.4 !important;
     }
 
+    /* Custom sidebar headers - centered and bold */
+    .sidebar-header {
+        color: #ffffff !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        margin: 1.5rem 0 1rem 0 !important;
+        padding: 0 !important;
+        line-height: 1.4 !important;
+    }
+
     /* Sidebar body text - lighter than main content */
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] span,
@@ -787,29 +798,13 @@ def display_header():
 
 
 def display_sidebar(vector_store: VectorStore):
-    """Display sidebar with system information and filters."""
+    """Display sidebar with filters."""
     with st.sidebar:
-        st.header("System Information")
-
         # Get statistics
         stats = vector_store.get_stats()
 
-        # Display stats
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown('<div class="stat-box">', unsafe_allow_html=True)
-            st.metric("Total Chunks", stats['total_chunks'])
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        with col2:
-            st.markdown('<div class="stat-box">', unsafe_allow_html=True)
-            st.metric("Indexed Papers", len(stats['papers']))
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        st.divider()
-
         # Filters
-        st.header("Search Filters")
+        st.markdown('<h2 class="sidebar-header">Search Filters</h2>', unsafe_allow_html=True)
 
         # Paper filter
         all_papers = [p['name'] for p in stats['papers']]
@@ -841,7 +836,7 @@ def display_sidebar(vector_store: VectorStore):
         st.divider()
 
         # Sample questions
-        st.header("Sample Questions")
+        st.markdown('<h2 class="sidebar-header">Sample Questions</h2>', unsafe_allow_html=True)
         st.caption("Click on any question to ask it")
 
         # Questions designed to showcase TABLE extractions (VLM-extracted structured data)
@@ -931,7 +926,7 @@ def display_sidebar(vector_store: VectorStore):
         st.divider()
 
         # System info
-        st.header("Indexed Papers")
+        st.markdown('<h2 class="sidebar-header">Indexed Papers</h2>', unsafe_allow_html=True)
         with st.expander("View all papers"):
             for paper in stats['papers']:
                 st.text(f"• {paper['name']} ({paper['chunks']} chunks)")
