@@ -839,88 +839,88 @@ def display_sidebar(vector_store: VectorStore):
         st.markdown('<h2 class="sidebar-header">Sample Questions</h2>', unsafe_allow_html=True)
         st.caption("Click on any question to ask it")
 
-        # Questions designed to showcase TABLE extractions (VLM-extracted structured data)
-        table_questions = [
-            "Show me experimental results comparing different models or methods in tables.",
-            "What performance metrics and benchmarks are reported in the tables?",
-            "What are the quantitative results showing accuracy, precision, or F1 scores?",
-            "Compare the numerical results across different datasets or configurations.",
-            "What statistical data or measurements are presented in tabular format?"
+        # Questions about video generation models
+        video_generation_questions = [
+            "What video generation models are discussed in the papers?",
+            "How does HunyuanVideo achieve state-of-the-art video generation?",
+            "What are the main components of the video generation pipeline?",
+            "What resolutions and durations can the video generation models produce?",
+            "How is video super-resolution implemented in these models?"
         ]
 
-        # Questions designed to showcase FIGURE/CHART extractions (VLM-extracted visual data)
-        figure_questions = [
-            "What trends or patterns are shown in the charts and graphs?",
-            "Describe the visualizations and their key insights from the figures.",
-            "What does the performance over time or across conditions look like in charts?",
-            "What architectural diagrams or model structures are illustrated?",
-            "What data distributions or comparative visualizations are presented?"
+        # Questions about training and optimization
+        training_questions = [
+            "What training procedures and optimization strategies are used?",
+            "How does the Muon optimizer compare to AdamW?",
+            "What is the role of Reinforcement Learning in video generation?",
+            "How are the models trained for multi-task learning?",
+            "What data acquisition and filtering methods are described?"
         ]
 
-        # Questions designed to showcase TEXT content (various text regions)
-        methodology_questions = [
-            "What are the main methodologies and approaches described?",
-            "How were the experiments designed and conducted?",
-            "What algorithms or techniques are proposed in the papers?",
-            "Explain the training procedures and optimization strategies used.",
-            "What preprocessing steps or data preparation methods are mentioned?"
+        # Questions about model architecture
+        architecture_questions = [
+            "What are the model architectures and parameter counts?",
+            "How does the DiT transformer architecture work?",
+            "What is the role of the Video Super-Resolution Network?",
+            "How are spatial resolution and temporal length scaled?",
+            "What pre-training stages are used for the foundation model?"
         ]
 
-        # Questions designed to showcase cross-region and multi-document retrieval
-        comprehensive_questions = [
-            "What are the key findings from both quantitative results and qualitative analysis?",
-            "Summarize the main contributions combining text, tables, and figures.",
-            "What conclusions can be drawn from the experimental data and visualizations?",
-            "Compare the theoretical approach with the empirical results shown.",
-            "What evidence supports the main claims across different sections?"
+        # Questions about data and quality
+        data_quality_questions = [
+            "How is training data quality ensured in video generation?",
+            "What filtering mechanisms are applied to raw video data?",
+            "How are aesthetic scores used to evaluate videos?",
+            "What dimensions are used to assess video quality?",
+            "How much video data is used for training?"
         ]
 
-        # Questions designed to showcase specific technical details from all region types
-        technical_details_questions = [
-            "What hyperparameters, configurations, or settings are specified?",
-            "What evaluation metrics are used and what are their values?",
-            "What are the model architectures and their component details?",
-            "What datasets are used and what are their characteristics?",
-            "What baseline methods are compared and how do they perform?"
+        # Questions about technical innovations
+        technical_innovation_questions = [
+            "What novel techniques are introduced for video captioning?",
+            "How is the richness-hallucination trade-off addressed?",
+            "What reward models are used for reinforcement learning?",
+            "How does flow matching-based training work?",
+            "What strategies are used for training stability?"
         ]
 
-        # Questions designed to showcase LIST and TITLE regions
-        structural_questions = [
-            "What are the main research contributions or key points listed?",
-            "What limitations or future work directions are mentioned?",
-            "What related work or background concepts are discussed?",
-            "What are the research objectives and hypotheses stated?",
-            "What conclusions and recommendations are provided?"
+        # Questions about capabilities and performance
+        performance_questions = [
+            "What are the main contributions and capabilities of these models?",
+            "How do open-source models compare to closed-source alternatives?",
+            "What improvements are achieved through supervised fine-tuning?",
+            "What tasks can the models perform besides text-to-video?",
+            "How is motion quality and temporal consistency improved?"
         ]
 
-        with st.expander("Table Data Questions (VLM Extractions)"):
-            for i, q in enumerate(table_questions, 1):
-                if st.button(f"{i}. {q}", key=f"table_{i}"):
+        with st.expander("Video Generation Models"):
+            for i, q in enumerate(video_generation_questions, 1):
+                if st.button(f"{i}. {q}", key=f"video_{i}"):
                     st.session_state.selected_question = q
 
-        with st.expander("Figure & Chart Questions (VLM Extractions)"):
-            for i, q in enumerate(figure_questions, 1):
-                if st.button(f"{i}. {q}", key=f"figure_{i}"):
+        with st.expander("Training & Optimization"):
+            for i, q in enumerate(training_questions, 1):
+                if st.button(f"{i}. {q}", key=f"training_{i}"):
                     st.session_state.selected_question = q
 
-        with st.expander("Methodology & Text Questions"):
-            for i, q in enumerate(methodology_questions, 1):
-                if st.button(f"{i}. {q}", key=f"methodology_{i}"):
+        with st.expander("Model Architecture"):
+            for i, q in enumerate(architecture_questions, 1):
+                if st.button(f"{i}. {q}", key=f"architecture_{i}"):
                     st.session_state.selected_question = q
 
-        with st.expander("Comprehensive Questions (All Region Types)"):
-            for i, q in enumerate(comprehensive_questions, 1):
-                if st.button(f"{i}. {q}", key=f"comprehensive_{i}"):
+        with st.expander("Data & Quality"):
+            for i, q in enumerate(data_quality_questions, 1):
+                if st.button(f"{i}. {q}", key=f"data_{i}"):
                     st.session_state.selected_question = q
 
-        with st.expander("Technical Details (Mixed Regions)"):
-            for i, q in enumerate(technical_details_questions, 1):
-                if st.button(f"{i}. {q}", key=f"technical_{i}"):
+        with st.expander("Technical Innovations"):
+            for i, q in enumerate(technical_innovation_questions, 1):
+                if st.button(f"{i}. {q}", key=f"innovation_{i}"):
                     st.session_state.selected_question = q
 
-        with st.expander("Structural Content (Lists & Titles)"):
-            for i, q in enumerate(structural_questions, 1):
-                if st.button(f"{i}. {q}", key=f"structural_{i}"):
+        with st.expander("Performance & Capabilities"):
+            for i, q in enumerate(performance_questions, 1):
+                if st.button(f"{i}. {q}", key=f"performance_{i}"):
                     st.session_state.selected_question = q
 
         st.divider()
