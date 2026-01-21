@@ -94,6 +94,29 @@ st.markdown("""
         line-height: 1.4 !important;
     }
 
+    /* Remove boxes around sidebar sections */
+    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+
+    [data-testid="stSidebar"] .element-container {
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+
+    /* Sidebar form/widget containers */
+    [data-testid="stSidebar"] [data-testid="stForm"],
+    [data-testid="stSidebar"] [data-testid="stSlider"],
+    [data-testid="stSidebar"] .stMultiSelect,
+    [data-testid="stSidebar"] .stSelectbox {
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+
     /* Sidebar body text - lighter than main content */
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] span,
@@ -792,7 +815,7 @@ def display_header():
     """Display application header."""
     st.markdown('<div class="main-header">Research Paper Chat Assistant</div>', unsafe_allow_html=True)
     st.markdown(
-        '<div class="sub-header">Chat with 15 research papers using layout-aware document understanding and evidence-backed answers</div>',
+        '<div class="sub-header">Chat with 10 research papers using layout-aware document understanding and evidence-backed answers</div>',
         unsafe_allow_html=True
     )
 
@@ -922,14 +945,6 @@ def display_sidebar(vector_store: VectorStore):
             for i, q in enumerate(performance_questions, 1):
                 if st.button(f"{i}. {q}", key=f"performance_{i}"):
                     st.session_state.selected_question = q
-
-        st.divider()
-
-        # System info
-        st.markdown('<h2 class="sidebar-header">Indexed Papers</h2>', unsafe_allow_html=True)
-        with st.expander("View all papers"):
-            for paper in stats['papers']:
-                st.text(f"• {paper['name']} ({paper['chunks']} chunks)")
 
         return {
             'selected_papers': selected_papers if selected_papers else None,
