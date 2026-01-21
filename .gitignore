@@ -35,13 +35,15 @@ ENV/
 # Environment variables
 .env
 
-# Data directories
-chroma_db/
+# Data directories - EXCEPT chroma_db (needed for deployment)
+# chroma_db/ is now tracked for Streamlit Cloud deployment
 data/processed/
 data/embeddings/
 *.pdf
-*.json
 *.chunks.json
+
+# Allow paper_metadata.json (needed for app)
+!data/paper_metadata.json
 
 # Logs
 logs/

@@ -662,6 +662,57 @@ This project is for research and educational purposes.
 - **OpenRouter**: LLM API gateway
 - **Qwen Team**: Qwen2-VL and Qwen2.5 models
 
+## Deployment to Streamlit Cloud
+
+### Prerequisites
+1. A GitHub repository with your code (already done!)
+2. Pre-processed ChromaDB vector store (`chroma_db/` directory)
+3. OpenRouter API key
+
+### Steps
+
+1. **Ensure chroma_db is committed** (already configured in this repo)
+   ```bash
+   git add chroma_db/ data/paper_metadata.json
+   git commit -m "Add pre-processed vector store for deployment"
+   git push
+   ```
+
+2. **Deploy on Streamlit Cloud**
+   - Go to [share.streamlit.io](https://share.streamlit.io)
+   - Click "New app"
+   - Select your repository: `arushigupta596/research-paper-chat-rag-`
+   - Branch: `main`
+   - Main file path: `app.py`
+   - Click "Deploy"
+
+3. **Add Secrets**
+   - In your Streamlit Cloud app dashboard, go to "Settings" → "Secrets"
+   - Add your OpenRouter API key:
+   ```toml
+   OPENROUTER_API_KEY = "your_actual_api_key_here"
+   ```
+   - Click "Save"
+
+4. **Wait for deployment** (usually 2-5 minutes)
+
+### Important Notes
+
+**About requirements.txt:**
+- The streamlined `requirements.txt` includes only runtime dependencies (LangChain, ChromaDB, Streamlit)
+- Document processing dependencies (detectron2, paddleocr, etc.) are commented out
+- This is intentional: document processing happens locally, not on Streamlit Cloud
+- The app loads pre-processed data from `chroma_db/` directory
+
+**System Dependencies:**
+- `packages.txt` includes Tesseract and Poppler (for potential future use)
+- These are not required for the current chat interface
+
+**Data Files:**
+- `chroma_db/` (~15MB) contains pre-processed vector embeddings
+- `data/paper_metadata.json` contains paper titles and topics
+- Both are tracked in git for deployment
+
 ## Support
 
 For issues, questions, or contributions:

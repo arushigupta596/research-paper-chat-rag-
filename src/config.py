@@ -9,6 +9,17 @@ from pydantic import BaseModel, Field
 # Load environment variables
 load_dotenv()
 
+# Try to load Streamlit secrets if available (for Streamlit Cloud deployment)
+try:
+    import streamlit as st
+    if hasattr(st, 'secrets'):
+        # Override environment variables with Streamlit secrets
+        for key in st.secrets:
+            os.environ[key] = st.secrets[key]
+except (ImportError, FileNotFoundError, KeyError):
+    # Not running on Streamlit Cloud or secrets not configured
+    pass
+
 class Config(BaseModel):
     """System configuration."""
 

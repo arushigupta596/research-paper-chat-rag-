@@ -1,0 +1,52 @@
+{
+  "2505.07916v1.pdf": {
+    "title": "MiniMax-Speech: Autoregressive Text-to-Speech Model",
+    "topic": "Text-to-Speech (TTS) Generation",
+    "keywords": ["TTS", "speech synthesis", "autoregressive models"]
+  },
+  "2505.09388v1.pdf": {
+    "title": "Research Paper on Machine Learning",
+    "topic": "Machine Learning",
+    "keywords": ["ML", "neural networks"]
+  },
+  "2505.10554v2.pdf": {
+    "title": "Multi-Modal AI Research",
+    "topic": "Multi-Modal Learning",
+    "keywords": ["multi-modal", "AI", "deep learning"]
+  },
+  "2505.11820v2.pdf": {
+    "title": "Natural Language Processing Study",
+    "topic": "Natural Language Processing",
+    "keywords": ["NLP", "language models"]
+  },
+  "2505.19147v3.pdf": {
+    "title": "Computer Vision and Image Processing",
+    "topic": "Computer Vision",
+    "keywords": ["CV", "image processing"]
+  },
+  "2508.03680v1.pdf": {
+    "title": "Deep Learning Architectures",
+    "topic": "Deep Learning",
+    "keywords": ["deep learning", "neural architectures"]
+  },
+  "2508.19205v1.pdf": {
+    "title": "AI Model Optimization",
+    "topic": "Model Optimization",
+    "keywords": ["optimization", "efficiency"]
+  },
+  "2511.18870v2.pdf": {
+    "title": "Hunyuan Foundation Model",
+    "topic": "Foundation Models",
+    "keywords": ["foundation models", "large-scale AI"]
+  },
+  "583127822_872908961738101_8157213289131333559_n.pdf": {
+    "title": "AI Research and Development",
+    "topic": "AI Research",
+    "keywords": ["AI", "research", "development"]
+  },
+  "605562216_1287553579874010_8068650067268945856_n.pdf": {
+    "title": "Text-to-Video Generation with Physical Consistency",
+    "topic": "Video Generation",
+    "keywords": ["text-to-video", "generation", "physical consistency"]
+  }
+}
