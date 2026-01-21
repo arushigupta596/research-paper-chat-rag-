@@ -288,21 +288,51 @@ st.markdown("""
     /* ════════════════════════════════════════════════════════════ */
     /* Expander headers - 15px for sidebar questions */
     .streamlit-expanderHeader {
-        background-color: #102a1c;
-        border: 1px solid #1f3d2b;
+        background-color: transparent !important;
+        border: none !important;
         color: #cfe7db;
-        border-radius: 0.5rem;
+        border-radius: 0 !important;
         font-size: 15px !important;
         font-weight: 500 !important;
         line-height: 1.4 !important;
+        padding: 0.5rem 0 !important;
     }
 
     .streamlit-expanderHeader:hover {
-        background-color: #142f20;
+        background-color: transparent !important;
+        color: #ffffff !important;
     }
 
     details[open] > summary {
-        border-bottom: 1px solid #1f3d2b;
+        border-bottom: none !important;
+    }
+
+    /* Remove all expander borders */
+    [data-testid="stExpander"] {
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+
+    /* Expander content */
+    .streamlit-expanderContent {
+        border: none !important;
+        background-color: transparent !important;
+        padding: 0.5rem 0 !important;
+    }
+
+    /* Remove details/summary borders */
+    details {
+        border: none !important;
+    }
+
+    summary {
+        border: none !important;
+    }
+
+    /* Hide divider lines in sidebar */
+    [data-testid="stSidebar"] hr {
+        display: none !important;
     }
 
     /* ════════════════════════════════════════════════════════════ */
@@ -626,6 +656,37 @@ st.markdown("""
         color: #ffffff;
         font-size: 14px !important;
         font-weight: 400 !important;
+    }
+
+    /* Dropdown menu overlay - fix transparency issue */
+    [data-baseweb="popover"] {
+        background-color: #102a1c !important;
+        z-index: 9999 !important;
+    }
+
+    /* Dropdown menu list */
+    [role="listbox"] {
+        background-color: #102a1c !important;
+        border: 1px solid #1f3d2b !important;
+    }
+
+    /* Dropdown menu options */
+    [role="option"] {
+        background-color: #102a1c !important;
+        color: #cfe7db !important;
+        font-size: 15px !important;
+    }
+
+    /* Dropdown menu option hover */
+    [role="option"]:hover {
+        background-color: #1f3d2b !important;
+        color: #ffffff !important;
+    }
+
+    /* Selected option in dropdown */
+    [role="option"][aria-selected="true"] {
+        background-color: #47bf72 !important;
+        color: #ffffff !important;
     }
 
     /* ════════════════════════════════════════════════════════════ */
