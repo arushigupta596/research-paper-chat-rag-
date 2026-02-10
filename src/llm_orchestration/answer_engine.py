@@ -64,7 +64,7 @@ class AnswerEngine:
             openai_api_key=self.api_key,
             openai_api_base=config.OPENROUTER_BASE_URL,
             temperature=0.1,  # Low temperature for factual accuracy
-            max_tokens=2000
+            max_tokens=1200  # Reduced to avoid credit errors
         )
 
         # System prompt for evidence-based answering

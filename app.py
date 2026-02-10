@@ -9,6 +9,7 @@ from typing import List, Dict, Any, Optional
 from src.retrieval.vector_store import VectorStore
 from src.retrieval.rag_retriever import RAGRetriever
 from src.llm_orchestration.answer_engine import AnswerEngine
+from src.llm_orchestration.answer_cache import AnswerCache, CachedAnswer
 from src.config import config
 
 # Configure logging
@@ -802,8 +803,12 @@ def initialize_system():
         # Initialize answer engine
         answer_engine = AnswerEngine(retriever)
 
+        # Initialize answer cache
+        cache_file = config.DATA_DIR / 'answer_cache.json'
+        answer_cache = AnswerCache(cache_file)
+
         logger.info("System initialized successfully")
-        return vector_store, retriever, answer_engine
+        return vector_store, retriever, answer_engine, answer_cache
 
     except Exception as e:
         logger.error(f"Failed to initialize system: {e}")
@@ -946,6 +951,27 @@ def display_sidebar(vector_store: VectorStore):
                 if st.button(f"{i}. {q}", key=f"performance_{i}"):
                     st.session_state.selected_question = q
 
+        st.divider()
+
+        # Cache management section
+        st.markdown('<h2 class="sidebar-header">Answer Cache</h2>', unsafe_allow_html=True)
+
+        # Get all suggested questions
+        all_suggested_questions = (
+            video_generation_questions +
+            training_questions +
+            architecture_questions +
+            data_quality_questions +
+            technical_innovation_questions +
+            performance_questions
+        )
+
+        # Cache statistics
+        cache_stats = st.session_state.get('answer_cache').get_stats() if 'answer_cache' in st.session_state else {'total_cached': 0}
+        st.metric("Cached Answers", f"{cache_stats['total_cached']}/{len(all_suggested_questions)}")
+
+        st.caption("Cached answers load instantly without using the LLM")
+
         return {
             'selected_papers': selected_papers if selected_papers else None,
             'selected_region_types': selected_region_types if selected_region_types else None,
@@ -1009,10 +1035,14 @@ def display_answer(answer: Any):
 def main():
     """Main application."""
     # Initialize system
-    vector_store, retriever, answer_engine = initialize_system()
+    vector_store, retriever, answer_engine, answer_cache = initialize_system()
 
     # Display header
     display_header()
+
+    # Store answer_cache in session state for sidebar access
+    if 'answer_cache' not in st.session_state:
+        st.session_state.answer_cache = answer_cache
 
     # Display sidebar and get filters
     filters = display_sidebar(vector_store)
@@ -1065,33 +1095,61 @@ def main():
 
         # Generate answer
         with st.chat_message('assistant'):
-            with st.spinner('Searching papers and generating answer...'):
-                try:
-                    # Choose reasoning mode
-                    if filters['enable_multi_hop']:
-                        answer = answer_engine.multi_hop_reasoning(
-                            question=question
-                        )
-                    else:
-                        answer = answer_engine.answer_question(
-                            question=question,
-                            top_k=filters['top_k'],
-                            filter_papers=filters['selected_papers'],
-                            filter_region_types=filters['selected_region_types']
-                        )
+            # Check if this is a cached suggested question
+            if answer_cache.has(question):
+                logger.info(f"Using cached answer for: {question[:50]}...")
 
-                    # Display answer
-                    display_answer(answer)
+                # Get cached answer
+                cached_answer = answer_cache.get(question)
 
-                    # Add to chat history
-                    st.session_state.messages.append({
-                        'role': 'assistant',
-                        'answer': answer
-                    })
+                # Convert cached answer to Answer object format
+                from src.llm_orchestration.answer_engine import Answer
+                answer = Answer(
+                    question=cached_answer.question,
+                    answer=cached_answer.answer,
+                    evidence=cached_answer.evidence,
+                    sources=cached_answer.sources,
+                    has_evidence=cached_answer.has_evidence,
+                    retrieval_stats=cached_answer.retrieval_stats
+                )
 
-                except Exception as e:
-                    logger.error(f"Error generating answer: {e}")
-                    st.error(f"Failed to generate answer: {e}")
+                # Display answer
+                display_answer(answer)
+
+                # Add to chat history
+                st.session_state.messages.append({
+                    'role': 'assistant',
+                    'answer': answer
+                })
+            else:
+                # Generate new answer using LLM
+                with st.spinner('Searching papers and generating answer...'):
+                    try:
+                        # Choose reasoning mode
+                        if filters['enable_multi_hop']:
+                            answer = answer_engine.multi_hop_reasoning(
+                                question=question
+                            )
+                        else:
+                            answer = answer_engine.answer_question(
+                                question=question,
+                                top_k=filters['top_k'],
+                                filter_papers=filters['selected_papers'],
+                                filter_region_types=filters['selected_region_types']
+                            )
+
+                        # Display answer
+                        display_answer(answer)
+
+                        # Add to chat history
+                        st.session_state.messages.append({
+                            'role': 'assistant',
+                            'answer': answer
+                        })
+
+                    except Exception as e:
+                        logger.error(f"Error generating answer: {e}")
+                        st.error(f"Failed to generate answer: {e}")
 
     # Clear chat button
     if st.session_state.messages:
