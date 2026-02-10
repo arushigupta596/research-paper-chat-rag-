@@ -951,27 +951,6 @@ def display_sidebar(vector_store: VectorStore):
                 if st.button(f"{i}. {q}", key=f"performance_{i}"):
                     st.session_state.selected_question = q
 
-        st.divider()
-
-        # Cache management section
-        st.markdown('<h2 class="sidebar-header">Answer Cache</h2>', unsafe_allow_html=True)
-
-        # Get all suggested questions
-        all_suggested_questions = (
-            video_generation_questions +
-            training_questions +
-            architecture_questions +
-            data_quality_questions +
-            technical_innovation_questions +
-            performance_questions
-        )
-
-        # Cache statistics
-        cache_stats = st.session_state.get('answer_cache').get_stats() if 'answer_cache' in st.session_state else {'total_cached': 0}
-        st.metric("Cached Answers", f"{cache_stats['total_cached']}/{len(all_suggested_questions)}")
-
-        st.caption("Cached answers load instantly without using the LLM")
-
         return {
             'selected_papers': selected_papers if selected_papers else None,
             'selected_region_types': selected_region_types if selected_region_types else None,
