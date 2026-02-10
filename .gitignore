@@ -68,3 +68,8 @@ models/
 tmp/
 temp/
 *.tmp
+
+# Documentation files that may contain sensitive info
+STREAMLIT_CLOUD_UPDATE.md
+LLAMA_SETUP_COMPLETE.txt
+IMPLEMENTATION_SUMMARY.txt
